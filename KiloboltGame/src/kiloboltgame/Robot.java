@@ -1,5 +1,7 @@
 package kiloboltgame;
 
+import java.util.ArrayList;
+
 public class Robot {
 
 	final int JUMPSPEED = -15;
@@ -18,6 +20,8 @@ public class Robot {
 
 	private int speedX = 0;
 	private int speedY = 1;
+
+	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
 	public void update() {
 		// Moves character or scrolls background accordingly
@@ -72,12 +76,12 @@ public class Robot {
 			speedX = -MOVESPEED;
 		}
 	}
-	
+
 	public void stopRight() {
 		setMovingRight(false);
 		stop();
 	}
-	
+
 	public void stopLeft() {
 		setMovingLeft(false);
 		stop();
@@ -87,11 +91,11 @@ public class Robot {
 		if (isMovingRight() == false && isMovingLeft() == false) {
 			speedX = 0;
 		}
-		
+
 		if (isMovingRight() == false && isMovingLeft() == true) {
 			moveLeft();
 		}
-		
+
 		if (isMovingRight() == true && isMovingLeft() == false) {
 			moveRight();
 		}
@@ -102,6 +106,15 @@ public class Robot {
 			speedY = JUMPSPEED;
 			jumped = true;
 		}
+	}
+
+	public void shoot() {
+		Projectile p = new Projectile(centerX + 50, centerY - 25);
+		projectiles.add(p);
+	}
+
+	public ArrayList getProjectiles() {
+		return projectiles;
 	}
 
 	public int getCenterX() {
@@ -143,27 +156,27 @@ public class Robot {
 	public void setSpeedY(int speedY) {
 		this.speedY = speedY;
 	}
-	
+
 	public boolean isDucked() {
 		return ducked;
 	}
-	
+
 	public void setDucked(boolean ducked) {
 		this.ducked = ducked;
 	}
-	
+
 	public boolean isMovingRight() {
 		return movingRight;
 	}
-	
+
 	public void setMovingRight(boolean movingRight) {
 		this.movingRight = movingRight;
 	}
-	
+
 	public boolean isMovingLeft() {
 		return movingLeft;
 	}
-	
+
 	public void setMovingLeft(boolean movingLeft) {
 		this.movingLeft = movingLeft;
 	}
