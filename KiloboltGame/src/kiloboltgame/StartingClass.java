@@ -17,7 +17,7 @@ import kiloboltgame.framework.Animation;
 
 public class StartingClass extends Applet implements Runnable, KeyListener {
 
-	private Robot robot;
+	private static Robot robot;
 	private Heliboy hb, hb2;
 	private Animation anim, hanim;
 	private Image image, character, character2, character3, currentSprite,
@@ -88,6 +88,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 		bg1 = new Background(0, 0);
 		bg2 = new Background(2160, 0);
+		robot = new Robot();
 
 		try {
 			loadMap("data/map1.txt");
@@ -97,7 +98,6 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 		hb = new Heliboy(340, 360);
 		hb2 = new Heliboy(700, 360);
-		robot = new Robot();
 	}
 
 	private void loadMap(String filename) throws IOException {
@@ -217,6 +217,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 		case KeyEvent.VK_CONTROL:
 			if (robot.isDucked() == false && robot.isJumped() == false) {
 				robot.shoot();
+				robot.setReadyToFire(false);
 			}
 			break;
 		}
@@ -239,6 +240,9 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 			break;
 
 		case KeyEvent.VK_SPACE:
+			break;
+		case KeyEvent.VK_CONTROL:
+			robot.setReadyToFire(true);
 			break;
 		}
 
@@ -268,6 +272,10 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 			g.fillRect(p.getX(), p.getY(), 10, 5);
 		}
 
+		g.drawRect((int) robot.rect.getX(), (int) robot.rect.getY(),
+				(int) robot.rect.getWidth(), (int) robot.rect.getHeight());
+		g.drawRect((int) robot.rect2.getX(), (int) robot.rect2.getY(),
+				(int) robot.rect2.getWidth(), (int) robot.rect2.getHeight());
 		g.drawImage(currentSprite, robot.getCenterX() - 61,
 				robot.getCenterY() - 63, this);
 		g.drawImage(hanim.getImage(), hb.getCenterX() - 48,
@@ -311,5 +319,9 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 	public static Background getBg2() {
 		return bg2;
+	}
+	
+	public static Robot getRobot() {
+		return robot;
 	}
 }
